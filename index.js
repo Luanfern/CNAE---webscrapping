@@ -36,14 +36,14 @@ const fs = require('fs');
 
     listCNAES = listCNAES.filter(v => v != null)
 
-    function verifyEquals(vs) {
+    function verifyEquals(vs, rp=false) {
         var dif = false
         var preval = vs[0]
         vs.map((v) => {
             if (v != preval) dif = true
         })
         if (dif == false) {
-            return vs[0]
+            return rp ? vs : vs[0]
         } else {
             return vs
         }
@@ -60,9 +60,9 @@ const fs = require('fs');
             var objUnified = {
                 'CNAE': v.CNAE,
                 'Descricao': verifyEquals([v.Descricao].concat(element.map(v => v.Descricao))),
-                'Anexo': verifyEquals([v.Anexo].concat(element.map(v => v.Anexo))),
+                'Anexo': verifyEquals([v.Anexo].concat(element.map(v => v.Anexo)), true),
                 'Fator_R': verifyEquals([v.Fator_R].concat(element.map(v => v.Fator_R))),
-                'Aliquota': verifyEquals([v.Aliquota].concat(element.map(v => v.Aliquota))),
+                'Aliquota': verifyEquals([v.Aliquota].concat(element.map(v => v.Aliquota)), true),
                 'Contabilizei': verifyEquals([v.Contabilizei].concat(element.map(v => v.Contabilizei))),
             }
             newList.cnaes.push(objUnified)
